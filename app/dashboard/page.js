@@ -22,7 +22,7 @@ const Layout = () => {
           </div>
 
           <div className="text-white  flex items-center gap-4">
-            {session && <p> Welcome {session.user.name} </p>}
+            {session && <p> Welcome {session?.user?.username}  </p>}
             <Link
               className=" hover:bg-blue-500 rounded-md duration-200 px-2 py-2 "
               href={"/login"}
