@@ -18,7 +18,7 @@ const authOptions = {
         try {
           await connect();
           const user = await User.findOne({ username });
-          // console.log(user.username)
+        
           if (!user) {
             return null;
           }

@@ -108,7 +108,7 @@ const page = () => {
             </p>
           </div>
         </div>
-        <div className=" flex-1 px-4 bg-gray-100 ">
+        <div className=" flex-1 px-4 bg-gray-100 h-fit ">
           {/* //dashboard nav */}
           <div className=" flex items-center  justify-between  py-4 border-gray-300 border-b-[1px]">
             <p className="  text-xl font-thin">
