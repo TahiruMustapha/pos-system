@@ -1,15 +1,13 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React from "react";
 
 const Layout = () => {
+  const router = useRouter();
   const { data: session } = useSession();
-  console.log(session);
-  if (!session) {
-    redirect("/");
-  }
+
   return (
     <div className=" w-full h-screen bg-blue-800">
       <header className="  py-4">
@@ -22,15 +20,19 @@ const Layout = () => {
           </div>
 
           <div className="text-white  flex items-center gap-4">
-            {session && <p> Welcome {session?.user?.username}  </p>}
+            {session && <p> Welcome {session?.user?.username} </p>}
             <Link
               className=" hover:bg-blue-500 rounded-md duration-200 px-2 py-2 "
-              href={"/login"}
+              href={"/main_dashboard"}
             >
               Dashboard
             </Link>
             <button
-              onClick={() => signOut()}
+              onClick={() => {
+                signOut({ redirect: false }).then(() => {
+                  router.push("/"); // Redirect to the dashboard page after signing out
+                });
+              }}
               className=" hover:bg-blue-500 rounded-md duration-200 px-2 py-2 "
             >
               Logout
@@ -38,14 +40,15 @@ const Layout = () => {
           </div>
         </nav>
       </header>
-      <div className="w-[80%] mx-auto flex items-center">
+      <div className="w-[80%] mx-auto mt-4 flex items-center">
         <div className=" flex-1">
           <h2 className=" capitalize mb-3 text-white font-semibold text-3xl">
-            Inventory & stock <br /> management <br /> solution
+            Discover Sales Harmony at FreshMart POS
           </h2>
           <p className=" text-white text-xl mb-3">
-            Inventory sytem to support and manage products in the pharmacy in
-            real tim and integrated to make it easier to develop your business.
+            Welcome to our seamless pharmacy experience. Our intuitive POS
+            system ensures quick and efficient sales and streamlined inventory
+            management.
           </p>
           <p className=" border-white border-[2px] inline-block text-white font-semibold rounded-md capitalize mt-3 px-3 py-2">
             Free Trial 1 month
@@ -65,8 +68,8 @@ const Layout = () => {
             </div>
           </div>
         </div>
-        <div className=" flex-2">
-          <img src="/inv-img.png" />
+        <div className=" flex-2  ">
+          <img src="/med3.png " className=" object-cover w-[650px]" />
         </div>
       </div>
     </div>
