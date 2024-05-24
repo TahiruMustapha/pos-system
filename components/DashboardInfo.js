@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiCategory, BiSolidDollarCircle } from "react-icons/bi";
 import { BsCart4, BsCartX } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { ProductContext } from "./ProductProvider";
+import Link from "next/link";
+const page = ({
+  setOpenAccount,
+  setProductDetail,
+  setReportBug,
+  setAddProduct,
+  setDashboard,
+}) => {
+  const { products, totalProductValue, uniqueCategories, outOfStockCount } =
+    useContext(ProductContext);
 
-const page = () => {
   return (
     <div>
       {/* Inventory stats */}
@@ -17,7 +27,7 @@ const page = () => {
               <BsCart4 className=" text-3xl text-white" />
               <div className=" flex text-white flex-col">
                 <p className=" text-sm">Total Products</p>
-                <p>10</p>
+                <p>{products.length}</p>
               </div>
             </div>
           </div>
@@ -26,7 +36,7 @@ const page = () => {
               <BiSolidDollarCircle className=" text-3xl text-white" />
               <div className=" flex text-white flex-col">
                 <p className=" text-sm">Total Store Value</p>
-                <p>$145000,00</p>
+                <p>${totalProductValue}</p>
               </div>
             </div>
           </div>
@@ -35,7 +45,7 @@ const page = () => {
               <BsCartX className=" text-3xl text-white" />
               <div className=" flex text-white flex-col">
                 <p className=" text-sm">Out of Stock</p>
-                <p>10</p>
+                <p>{outOfStockCount}</p>
               </div>
             </div>
           </div>
@@ -44,7 +54,7 @@ const page = () => {
               <BiCategory className=" text-3xl text-white" />
               <div className=" flex text-white flex-col">
                 <p className=" text-sm">All Categories</p>
-                <p>10</p>
+                <p>{uniqueCategories}</p>
               </div>
             </div>
           </div>
@@ -67,6 +77,7 @@ const page = () => {
       </div>
       {/* Inventory items */}
       {/* Table */}
+
       <table className=" mt-3 w-full  ">
         <thead className=" border-b-blue-600 border-b-[2px] border-t-blue-600 border-t-[2px]">
           <tr className="  ">
@@ -80,19 +91,34 @@ const page = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className=" bg-white text-center  ">
-            <td className=" p-3  ">1</td>
-            <td className=" p-3 ">Item 1</td>
-            <td className=" p-3 ">Item 2</td>
-            <td className=" p-3 ">Item 3</td>
-            <td className=" p-3 ">Item 4</td>
-            <td className=" p-3 ">Item 5</td>
-            <td className=" flex items-center justify-center gap-2 p-3 ">
-              <MdOutlineRemoveRedEye className=" text-pink-600 text-xl cursor-pointer" />
-              <FaEdit className=" text-green-500 text-xl cursor-pointer" />
-              <FaRegTrashAlt className=" text-red-500 text-xl cursor-pointer" />
-            </td>
-          </tr>
+          {products.map((product, index) => (
+            <tr
+              key={product._id}
+              className=" bg-white my-1 border-b-gray-500 border-[1px] text-center  "
+            >
+              <td className=" p-3  ">{index + 1}</td>
+              <td className=" p-3 ">{product.productName}</td>
+              <td className=" p-3 ">{product.productCategory}</td>
+              <td className=" p-3 ">${product.productPrice}</td>
+              <td className=" p-3 ">{product.productQuantity}</td>
+              <td className=" p-3 ">
+                $ {product.productPrice * product.productQuantity}
+              </td>
+              <td className=" flex items-center justify-center gap-2 p-3 ">
+                <MdOutlineRemoveRedEye
+                  onClick={() =>
+                    setProductDetail(true) ||
+                    setAddProduct(false) ||
+                    setDashboard(false) ||
+                    setReportBug(false)
+                  }
+                  className=" text-pink-600 text-xl cursor-pointer"
+                />
+                <FaEdit className=" text-green-500 text-xl cursor-pointer" />
+                <FaRegTrashAlt className=" text-red-500 text-xl cursor-pointer" />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       {/* Table */}

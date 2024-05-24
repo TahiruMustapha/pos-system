@@ -12,12 +12,14 @@ import { useRouter } from "next/navigation";
 import DashboardInfo from "../../components/DashboardInfo";
 import AddProduct from "@/components/AddProduct";
 import ReportBug from "@/components/ReportBug";
+import ProductDetail from "@/components/ProductDetail";
 
 const page = () => {
   const [openAccount, setOpenAccount] = useState(false);
   const [dashboard, setDashboard] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
   const [reportBug, setReportBug] = useState(false);
+  const [productDetail, setProductDetail] = useState(false);
   const [active, setActive] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
@@ -44,7 +46,8 @@ const page = () => {
               onClick={() =>
                 setDashboard(true) ||
                 setAddProduct(false) ||
-                setReportBug(false)
+                setReportBug(false) ||
+                setProductDetail(false)
               }
               className={`text-blue-500 cursor-pointer `}
             >
@@ -58,7 +61,8 @@ const page = () => {
               onClick={() =>
                 setAddProduct(true) ||
                 setDashboard(false) ||
-                setReportBug(false)
+                setReportBug(false) ||
+                setProductDetail(false)
               }
               className={`cursor-pointer text-gray-600`}
             >
@@ -99,7 +103,8 @@ const page = () => {
               onClick={() =>
                 setReportBug(true) ||
                 setAddProduct(false) ||
-                setDashboard(false)
+                setDashboard(false) ||
+                setProductDetail(false)
               }
               className=" cursor-pointer text-gray-600"
             >
@@ -108,7 +113,7 @@ const page = () => {
             </p>
           </div>
         </div>
-        <div className=" flex-1 px-4 bg-gray-100 h-fit ">
+        <div className=" flex-1 px-4 bg-gray-100 h-full ">
           {/* //dashboard nav */}
           <div className=" flex items-center  justify-between  py-4 border-gray-300 border-b-[1px]">
             <p className="  text-xl font-thin">
@@ -129,9 +134,18 @@ const page = () => {
             </button>
           </div>
           {/* //dashboard nav */}
-          {dashboard && <DashboardInfo />}
+          {dashboard && (
+            <DashboardInfo
+              setOpenAccount={setOpenAccount}
+              setReportBug={setReportBug}
+              setAddProduct={setAddProduct}
+              setDashboard={setDashboard}
+              setProductDetail = {setProductDetail}
+            />
+          )}
           {addProduct && <AddProduct />}
           {reportBug && <ReportBug />}
+          {productDetail && <ProductDetail />}
         </div>
       </div>
     </div>

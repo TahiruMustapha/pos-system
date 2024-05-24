@@ -23,6 +23,7 @@ const AddProductSchema = new Schema(
       type: Number,
       required: true,
     },
+
     productDescription: {
       type: String,
       required: true,
@@ -30,5 +31,6 @@ const AddProductSchema = new Schema(
   },
   { timestamps: true }
 );
-const AddProduct = models.AddProduct || mongoose.model("AddProduct", AddProductSchema);
+const AddProduct =
+  models.AddProduct || mongoose.model("AddProduct", AddProductSchema);
 export default AddProduct;

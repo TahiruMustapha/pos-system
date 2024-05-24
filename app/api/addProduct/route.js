@@ -12,6 +12,7 @@ export async function POST(request) {
       productPrice,
       productDescription,
       productQuantity,
+     
     } = await request.json();
     await connect();
     await AddProduct.create({
@@ -21,6 +22,7 @@ export async function POST(request) {
       productPrice,
       productDescription,
       productQuantity,
+      
     });
     return NextResponse.json(
       { message: "Product Added successfully!" },
