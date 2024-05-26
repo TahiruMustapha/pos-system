@@ -51,7 +51,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className=" w-full">
+    <div className=" w-full ">
       <p className=" mt-2 text-2xl text-gray-500">Add New Product</p>
       <div className=" bg-white w-[50%] mb-6  mt-3 shadow-md pb-6 rounded-md px-2 pt-2">
         <form onSubmit={handleSubmit}>

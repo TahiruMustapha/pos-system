@@ -11,9 +11,10 @@ const ProductDetail = () => {
             products.map((product)=>(
                 <div key={product._id} className=" bg-white w-[50%] mb-6  mt-3 shadow-md pb-6 rounded-md px-2 pt-2">
                 <div className=" w-full">
-                    <img src={product.productImg} alt="product-image"/>
+                    <img src={product.productImg} alt={product.productName}/>
                 </div>
               </div>
+              
             ))
         }
      
