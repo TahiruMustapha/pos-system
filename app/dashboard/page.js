@@ -1,5 +1,4 @@
-"use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { BiCategory, BiSolidDollarCircle } from "react-icons/bi";
 import { BsCart4, BsCartX } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
@@ -8,9 +7,30 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 // import { ProductContext } from "./ProductProvider";
 import Link from "next/link";
 import { ProductContext } from "@/components/ProductProvider";
-const page = () => {
-  const { products, totalProductValue, uniqueCategories, outOfStockCount } =
-    useContext(ProductContext);
+import Search from "@/components/Search";
+import { fetchUsers } from "../api/fetchProduct/route";
+const page = async ({ searchParams }) => {
+  const q = searchParams?.q || "";
+  // const { products, totalProductValue, uniqueCategories, outOfStockCount } =
+  //   useContext(ProductContext);
+  const  products = await fetchUsers(q);
+
+  // Calculate the total product value
+  const totalProductValue = products.reduce(
+    (acc, product) => acc + product.productPrice * product.productQuantity,
+    0
+  );
+
+  // Calculate the number of unique categories
+  const categories = new Set(
+    products.map((product) => product.productCategory)
+  );
+  const uniqueCategories = categories.size;
+
+  // Calculate the number of out-of-stock products
+  const outOfStockCount = products.filter(
+    (product) => product.productQuantity === 0
+  ).length;
 
   return (
     <div className=" pb-6">
@@ -61,14 +81,7 @@ const page = () => {
       <div className="w-full mt-5">
         <div className=" flex items-center justify-between">
           <p className="text-2xl text-gray-500">Inventory Items</p>
-          <div className=" flex px-1 py-1 rounded-md bg-white border-gray-300 border-[1px] items-center gap-1">
-            <CiSearch className=" text-xl font-bold" />
-            <input
-              className=" bg-transparent outline-none"
-              type="text"
-              placeholder="Search by name"
-            />
-          </div>
+          <Search />
         </div>
       </div>
       {/* Inventory items */}
@@ -81,7 +94,7 @@ const page = () => {
             <th className=" p-3 text-sm text-gray-600">Name</th>
             <th className=" p-3 text-sm text-gray-600">Category</th>
             <th className=" p-3 text-sm text-gray-600">Price</th>
-            <th className=" p-3 text-sm text-gray-600">Quantity</th>
+            <th className=" p-3 text-sm text-gray-600">Stock</th>
             <th className=" p-3 text-sm text-gray-600">Value</th>
             <th className=" p-3 text-sm text-gray-600">Action</th>
           </tr>
@@ -101,7 +114,9 @@ const page = () => {
                 $ {product.productPrice * product.productQuantity}
               </td>
               <td className=" flex items-center justify-center gap-2 p-3 ">
-               <Link href={`/dashboard/productDetail/${product._id}`} ><MdOutlineRemoveRedEye className=" text-pink-600 text-xl cursor-pointer" /></Link> 
+                <Link href={`/dashboard/productDetail/${product._id}`}>
+                  <MdOutlineRemoveRedEye className=" text-pink-600 text-xl cursor-pointer" />
+                </Link>
                 <FaEdit className=" text-green-500 text-xl cursor-pointer" />
                 <FaRegTrashAlt className=" text-red-500 text-xl cursor-pointer" />
               </td>

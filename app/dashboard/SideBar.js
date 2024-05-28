@@ -9,10 +9,17 @@ import { FaMessage } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 const SideBar = () => {
-  const [openAccount, setOpenAccount] = useState(false);
+  const [active, setActive] = useState(false);
+  const path = usePathname();
+  const isActive = (pathName) => {
+    return path === pathName;
+  };
+
   return (
-    <div className=" h-screen ">
+    <div className=" h-screen fixed  w-[19%] ">
       <div className=" w-full">
         <div className=" bg-black text-white px-4  py-4 w-full flex items-center justify-between">
           <div className=" border-white border-[2px] w-8 h-8 flex items-center justify-center rounded-full">
@@ -23,44 +30,87 @@ const SideBar = () => {
           </div>
           <HiMenuAlt3 className=" cursor-pointer font-semibold text-xl text-white" />
         </div>
-        <div className=" w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2">
+        <div className={isActive('/dashboard')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
           <MdDashboard
-            className={`
-              text-2xl text-gray-600`}
+            className={
+              isActive('/dashboard')
+                ? ` text-2xl text-blue-500`
+                : `
+              text-2xl text-gray-600`
+            }
           />
-          <Link href={"/dashboard"} className={`text-blue-500 cursor-pointer `}>
+          <Link
+            href={"/dashboard"}
+            className={
+              isActive('/dashboard')
+                ? `text-blue-500 cursor-pointer `
+                : ` text-gray-500 cursor-pointer`
+            }
+          >
             {" "}
             Dashboard
           </Link>
         </div>
-        <div className=" w-full px-4 py-3 border-gray-200 border-b-[2px]    flex items-center gap-2">
-          <BiImageAdd className={` text-2xl text-gray-600`} />
+        <div className={isActive('/dashboard/addProduct')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+          <BiImageAdd
+            className={
+              isActive('/dashboard/addProduct') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
+            }
+          />
           <Link
             href={"/dashboard/addProduct"}
-            className={`cursor-pointer text-gray-600`}
+            className={
+              isActive("/dashboard/addProduct")
+                ? `text-blue-500 cursor-pointer`
+                : `cursor-pointer text-gray-600`
+            }
           >
             {" "}
             Add Product
           </Link>
         </div>
-        <div className="w-full px-4 py-3 border-gray-200 border-b-[2px] flex items-center gap-2">
-          <CgProfile  className=" text-2xl text-gray-600" />
-          <Link href={'/dashboard/profile'} className=" flex items-center w-full justify-between text-gray-600">
-            Profile 
+        <div className={isActive('/dashboard/profile')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+          <CgProfile className={
+              isActive('/dashboard/profile') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
+            } />
+          <Link
+            href={"/dashboard/profile"}
+            className={
+              isActive("/dashboard/profile")
+                ? `text-blue-500 cursor-pointer`
+                : `cursor-pointer text-gray-600`
+            }
+          >
+            Profile
           </Link>
         </div>
-        <div className="w-full px-4 py-3 border-gray-200 border-b-[2px] flex items-center gap-2">
-          <FaChartColumn className=" text-2xl text-gray-600" />
-          <Link href={'/dashboard/editProfile'} className=" flex items-center w-full justify-between text-gray-600">
-            Edit profile 
+        <div className={isActive('/dashboard/editProfile')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+          <FaChartColumn className={
+              isActive('/dashboard/editProfile') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
+            } />
+          <Link
+            href={"/dashboard/editProfile"}
+            className={
+              isActive("/dashboard/editProfile")
+                ? `text-blue-500 cursor-pointer`
+                : `cursor-pointer text-gray-600`
+            }
+          >
+            Edit profile
           </Link>
         </div>
 
-        <div className=" w-full px-4 py-3 border-gray-200 border-b-[2px]    flex items-center gap-2">
-          <FaMessage className=" text-2xl text-gray-600" />
+        <div className={isActive('/dashboard/reportBug')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+          <FaMessage className={
+              isActive('/dashboard/reportBug') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
+            } />
           <Link
             href={"/dashboard/reportBug"}
-            className=" cursor-pointer text-gray-600"
+            className={
+              isActive("/dashboard/reportBug")
+                ? `text-blue-500 cursor-pointer`
+                : `cursor-pointer text-gray-600`
+            }
           >
             {" "}
             Report Bug

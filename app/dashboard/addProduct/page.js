@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-
 const AddProduct = () => {
-  const [productImg, setProductImg] = useState('');
+  const [productImg, setProductImg] = useState("");
   const [productName, setproductName] = useState("");
   const [productCategory, setproductCategory] = useState("");
   const [productPrice, setproductPrice] = useState("");
@@ -12,6 +11,10 @@ const AddProduct = () => {
   const [productDescription, setproductDescription] = useState("");
   const [error, setError] = useState("");
   const handleSubmit = async (e) => {
+    //create upload preset
+    // name:products_preset
+    //cloudName:dpwypmp2s
+   
     e.preventDefault();
     if (
       !productImg ||
@@ -41,6 +44,26 @@ const AddProduct = () => {
       if (res.ok) {
         const formBox = e.target;
         formBox.reset();
+        const formData = new FormData();
+        formData.append("file", productImg);
+        formData.append("upload_preset", "products_preset");
+        //upload img to cloudinary
+        try {
+          const uploadRsponse = await fetch(
+            "https://api.cloudinary.com/v1_1/dpwypmp2s/image/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          if (!uploadRsponse.ok) {
+            throw new Error("Image upload faild!");
+          }
+          const imageData = await uploadRsponse.json();
+          console.log(imageData)
+        } catch (error) {
+          console.log(error)
+        }
         toast.success("Product added successfully! ");
       } else {
         console.log("Failed product!!");
@@ -67,7 +90,9 @@ const AddProduct = () => {
                 type="file"
               />
             </div>
-            <p className=" text-gray-500">No image set for this product</p>
+            <p className=" text-gray-500">
+              {productImg ? `` : `No image set for this product`}
+            </p>
           </div>
           <div className=" mt-2 flex flex-col">
             <label>Product Name:</label>

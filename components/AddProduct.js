@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-
 const AddProduct = () => {
   const [productImg, setProductImg] = useState(null);
   const [productName, setproductName] = useState("");
@@ -11,6 +10,7 @@ const AddProduct = () => {
   const [productQuantity, setproductQuantity] = useState("");
   const [productDescription, setproductDescription] = useState("");
   const [error, setError] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
@@ -41,6 +41,7 @@ const AddProduct = () => {
       if (res.ok) {
         const formBox = e.target;
         formBox.reset();
+        console.log("product Image:",productImg)
         toast.success("Product added successfully! ");
       } else {
         console.log("Failed product!!");
@@ -49,7 +50,7 @@ const AddProduct = () => {
       console.log("Error during adding product!", error);
     }
   };
-  
+
   return (
     <div className=" w-full">
       <p className=" mt-2 text-2xl text-gray-500">Add New Product</p>
@@ -67,7 +68,7 @@ const AddProduct = () => {
                 type="file"
               />
             </div>
-            <p className=" text-gray-500">No image set for this product</p>
+            <p className=" text-gray-500">{productImg? ``:`No image set for this product`}</p>
           </div>
           <div className=" mt-2 flex flex-col">
             <label>Product Name:</label>
