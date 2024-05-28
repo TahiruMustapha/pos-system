@@ -6,6 +6,8 @@ import { BiImageAdd } from "react-icons/bi";
 import { FaChartColumn } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { FaMessage } from "react-icons/fa6";
+import { CgProfile } from "react-icons/cg";
+
 import Link from "next/link";
 const SideBar = () => {
   const [openAccount, setOpenAccount] = useState(false);
@@ -24,45 +26,45 @@ const SideBar = () => {
         <div className=" w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2">
           <MdDashboard
             className={`
-              text-2xl text-gray-600`
-           }
+              text-2xl text-gray-600`}
           />
-          <Link href={'/dashboard'} className={`text-blue-500 cursor-pointer `}> Dashboard</Link>
+          <Link href={"/dashboard"} className={`text-blue-500 cursor-pointer `}>
+            {" "}
+            Dashboard
+          </Link>
         </div>
         <div className=" w-full px-4 py-3 border-gray-200 border-b-[2px]    flex items-center gap-2">
           <BiImageAdd className={` text-2xl text-gray-600`} />
-          <Link href={'dashboard/addProduct'} className={`cursor-pointer text-gray-600`}> Add Product</Link>
+          <Link
+            href={"/dashboard/addProduct"}
+            className={`cursor-pointer text-gray-600`}
+          >
+            {" "}
+            Add Product
+          </Link>
         </div>
-        <div className="w-full px-4 py-3 border-gray-200 border-b-[2px]">
-          <div className=" w-full flex items-center gap-3">
-            <FaChartColumn className=" text-2xl text-gray-600" />
-            <p className=" flex items-center w-full justify-between text-gray-600">
-              {" "}
-              Account{" "}
-              <span className=" cursor-pointer">
-                {openAccount ? (
-                  <IoIosArrowDown onClick={() => setOpenAccount(false)} />
-                ) : (
-                  <IoIosArrowForward onClick={() => setOpenAccount(true)} />
-                )}
-              </span>
-            </p>
-          </div>
-          {openAccount && (
-            <div className=" mt-2 flex flex-col gap-2">
-              <Link href={"addAccount/profile"} className=" border-gray-200 cursor-pointer border-[2px] py-2 px-2 rounded-md text-gray-600">
-                Profile
-              </Link>
-              <Link href={"addAccount/editProfile"} className=" border-gray-200 cursor-pointer border-[2px] py-2 px-2 rounded-md text-gray-600">
-                Edit Profile
-              </Link>
-            </div>
-          )}
+        <div className="w-full px-4 py-3 border-gray-200 border-b-[2px] flex items-center gap-2">
+          <CgProfile  className=" text-2xl text-gray-600" />
+          <Link href={'/dashboard/profile'} className=" flex items-center w-full justify-between text-gray-600">
+            Profile 
+          </Link>
+        </div>
+        <div className="w-full px-4 py-3 border-gray-200 border-b-[2px] flex items-center gap-2">
+          <FaChartColumn className=" text-2xl text-gray-600" />
+          <Link href={'/dashboard/editProfile'} className=" flex items-center w-full justify-between text-gray-600">
+            Edit profile 
+          </Link>
         </div>
 
         <div className=" w-full px-4 py-3 border-gray-200 border-b-[2px]    flex items-center gap-2">
           <FaMessage className=" text-2xl text-gray-600" />
-          <Link href={"/dashboard/reportBug"} className=" cursor-pointer text-gray-600"> Report Bug</Link>
+          <Link
+            href={"/dashboard/reportBug"}
+            className=" cursor-pointer text-gray-600"
+          >
+            {" "}
+            Report Bug
+          </Link>
         </div>
       </div>
     </div>

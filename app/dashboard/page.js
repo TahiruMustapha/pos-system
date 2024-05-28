@@ -8,13 +8,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 // import { ProductContext } from "./ProductProvider";
 import Link from "next/link";
 import { ProductContext } from "@/components/ProductProvider";
-const page = ({
-  setOpenAccount,
-  setProductDetail,
-  setReportBug,
-  setAddProduct,
-  setDashboard,
-}) => {
+const page = () => {
   const { products, totalProductValue, uniqueCategories, outOfStockCount } =
     useContext(ProductContext);
 
@@ -107,15 +101,7 @@ const page = ({
                 $ {product.productPrice * product.productQuantity}
               </td>
               <td className=" flex items-center justify-center gap-2 p-3 ">
-                <MdOutlineRemoveRedEye
-                  onClick={() =>
-                    setProductDetail(true) ||
-                    setAddProduct(false) ||
-                    setDashboard(false) ||
-                    setReportBug(false)
-                  }
-                  className=" text-pink-600 text-xl cursor-pointer"
-                />
+               <Link href={`/dashboard/productDetail/${product._id}`} ><MdOutlineRemoveRedEye className=" text-pink-600 text-xl cursor-pointer" /></Link> 
                 <FaEdit className=" text-green-500 text-xl cursor-pointer" />
                 <FaRegTrashAlt className=" text-red-500 text-xl cursor-pointer" />
               </td>

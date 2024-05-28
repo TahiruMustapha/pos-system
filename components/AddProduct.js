@@ -49,7 +49,7 @@ const AddProduct = () => {
       console.log("Error during adding product!", error);
     }
   };
-
+  
   return (
     <div className=" w-full">
       <p className=" mt-2 text-2xl text-gray-500">Add New Product</p>

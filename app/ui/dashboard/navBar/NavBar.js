@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -17,7 +17,7 @@ const NavBar = () => {
         </p>
         <button
           onClick={() => {
-            signOut({ redirect: false }).then(() => {
+            signOut ({ redirect: false }).then(() => {
               router.push("/"); // Redirect to the dashboard page after signing out
             });
           }}

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 
 const AddProduct = () => {
-  const [productImg, setProductImg] = useState(null);
+  const [productImg, setProductImg] = useState('');
   const [productName, setproductName] = useState("");
   const [productCategory, setproductCategory] = useState("");
   const [productPrice, setproductPrice] = useState("");
@@ -62,7 +62,7 @@ const AddProduct = () => {
             </p>
             <div className="border-gray-400 mt-1 mb-2 px-2 py-2 rounded-md  border-[1px]">
               <input
-                onChange={(e) => setProductImg(e.target.files[0])}
+                onChange={(e) => setProductImg(e.target.value)}
                 className=" text-gray-400"
                 type="file"
               />
