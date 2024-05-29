@@ -9,11 +9,13 @@ import Link from "next/link";
 import { ProductContext } from "@/components/ProductProvider";
 import Search from "@/components/Search";
 import { fetchUsers } from "../api/fetchProduct/route";
+import Pagination from "@/components/Pagination";
 const page = async ({ searchParams }) => {
   const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
   // const { products, totalProductValue, uniqueCategories, outOfStockCount } =
   //   useContext(ProductContext);
-  const  products = await fetchUsers(q);
+  const  {count,products} = await fetchUsers(q,page);
 
   // Calculate the total product value
   const totalProductValue = products.reduce(
@@ -125,6 +127,7 @@ const page = async ({ searchParams }) => {
         </tbody>
       </table>
       {/* Table */}
+      <Pagination count = {count}/>
     </div>
   );
 };
