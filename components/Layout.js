@@ -26,7 +26,7 @@ const Layout = () => {
           </div>
         </nav>
       </header>
-      <div className="w-[80%] mx-auto flex items-center">
+      <div className="w-[80%] mx-auto mt-6 flex items-center">
         <div className=" flex-1">
           <h2 className=" capitalize mb-3 text-white font-semibold text-3xl">
             Inventory & stock <br /> management <br /> solution
@@ -53,8 +53,8 @@ const Layout = () => {
             </div>
           </div>
         </div>
-        <div className=" flex-2">
-          <img src="/inv-img.png" />
+        <div className=" flex-1">
+          <img src="/med3.png" className=" " />
         </div>
       </div>
     </div>

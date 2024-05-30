@@ -4,25 +4,8 @@ import { ProductContext } from "./ProductProvider";
 import { useParams, useSearchParams } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-const ProductDetail = () => {
-  const { products } = useContext(ProductContext);
-  const fetchProductById = async (_id) => {
-    return products.find((product) => product._id === _id);
-  };
-  const params = useParams();
-
-  const searchParams = useSearchParams();
-  // const newparams = searchParams.get(_id);
-  const [product, setProduct] = useState(null);
-  const productId = params._id;
-
-  useEffect(() => {
-    if (productId) {
-      fetchProductById(productId).then(setProduct);
-    }
-  }, [productId]);
-  if (!product) return <div>Loading...</div>;
-  
+const ProductDetail = ({product}) => {
+  // const {_id,productName,productImg,productCategory,productPrice,productQuantity} = product
   return (
     <div className=" w-full">
       <p className=" text-gray-500 text-2xl">{product.productName}</p>

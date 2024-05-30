@@ -31,6 +31,5 @@ const AddProductSchema = new Schema(
   },
   { timestamps: true }
 );
-const AddProduct =
-  models.AddProduct || mongoose.model("AddProduct", AddProductSchema);
+const AddProduct = models.AddProduct || mongoose.model("AddProduct", AddProductSchema);
 export default AddProduct;

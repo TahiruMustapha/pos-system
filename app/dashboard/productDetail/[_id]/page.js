@@ -1,20 +1,26 @@
+import { fetchProducts } from "@/app/api/fetchProduct/route";
 import ProductDetail from "@/components/ProductDetail";
-import { ProductContext } from "@/components/ProductProvider";
-import getPrducts from "@/libs/getProduct";
-// import { useRouter } from "next/router";
+import AddProduct from "@/models/AddProducts";
+import { connect } from "@/utils/db";
+import { ObjectId } from "mongodb";
+import React from "react";
 
-import React, { useContext } from "react";
+// async function fetchProductById(_id) {
+//   await connect();
+//   // const product = await AddProduct.findOne({ _id: new ObjectId(id) });
+//   const products = await fetchProducts(_id);
+//   // console.log("Products",products)
+//   return products;
+// }
 
-export default function SingleProductPage() {
-  // const { products } = useContext(ProductContext);
-  // const product = await getPrducts(_id);
+const SingleProductPage = async ({ params: { _id } }) => {
+  const products = await fetchProducts(_id);
 
   return (
-    <div className=" w-full p-3">
-      <div>
-        
-        <ProductDetail/>
-      </div>
+    <div>
+      <ProductDetail product={products} />
     </div>
   );
-}
+};
+
+export default SingleProductPage;

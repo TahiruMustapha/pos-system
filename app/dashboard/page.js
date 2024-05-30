@@ -6,17 +6,12 @@ import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 // import { ProductContext } from "./ProductProvider";
 import Link from "next/link";
-import { ProductContext } from "@/components/ProductProvider";
 import Search from "@/components/Search";
-import { fetchUsers } from "../api/fetchProduct/route";
 import Pagination from "@/components/Pagination";
+import { fetchProducts } from "../api/fetchProduct/route";
 const page = async ({ searchParams }) => {
   const q = searchParams?.q || "";
-  const page = searchParams?.page || 1;
-  // const { products, totalProductValue, uniqueCategories, outOfStockCount } =
-  //   useContext(ProductContext);
-  const  {count,products} = await fetchUsers(q,page);
-
+  const products = await fetchProducts(q);
   // Calculate the total product value
   const totalProductValue = products.reduce(
     (acc, product) => acc + product.productPrice * product.productQuantity,
@@ -127,7 +122,6 @@ const page = async ({ searchParams }) => {
         </tbody>
       </table>
       {/* Table */}
-      <Pagination count = {count}/>
     </div>
   );
 };
