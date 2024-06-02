@@ -10,7 +10,7 @@ import { FaMessage } from "react-icons/fa6";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import DashboardInfo from "../../components/DashboardInfo";
-import AddProduct from "@/components/AddProduct";
+import AddProduct from "@/components/AddProductForm";
 import ReportBug from "@/components/ReportBug";
 import ProductDetail from "@/components/ProductDetail";
 

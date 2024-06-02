@@ -9,9 +9,13 @@ import Link from "next/link";
 import Search from "@/components/Search";
 import Pagination from "@/components/Pagination";
 import { fetchProducts } from "../api/fetchProduct/route";
+import { deleteProduct } from "@/libs/actions";
+import DeleteBtn from "@/components/DeleteBtn";
 const page = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const products = await fetchProducts(q);
+  //  const  products = { ...product, _id: product._id.toString() };
+
   // Calculate the total product value
   const totalProductValue = products.reduce(
     (acc, product) => acc + product.productPrice * product.productQuantity,
@@ -114,8 +118,10 @@ const page = async ({ searchParams }) => {
                 <Link href={`/dashboard/productDetail/${product._id}`}>
                   <MdOutlineRemoveRedEye className=" text-pink-600 text-xl cursor-pointer" />
                 </Link>
-                <FaEdit className=" text-green-500 text-xl cursor-pointer" />
-                <FaRegTrashAlt className=" text-red-500 text-xl cursor-pointer" />
+                <Link href={`/dashboard/editProduct/${product._id}`}>
+                  <FaEdit className=" text-green-500 text-xl cursor-pointer" />
+                </Link>
+                 <DeleteBtn id = {product._id}/>
               </td>
             </tr>
           ))}

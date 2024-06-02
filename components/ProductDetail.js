@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 const ProductDetail = ({product}) => {
-  // const {_id,productName,productImg,productCategory,productPrice,productQuantity} = product
+  // console.log(typeof(product.productCategory))
   return (
     <div className=" w-full">
       <p className=" text-gray-500 text-2xl">{product.productName}</p>
@@ -13,7 +13,7 @@ const ProductDetail = ({product}) => {
         <div className=" bg-white px-2 py-2 border-gray-300 rounded-md border-[1px]  h-[250px]">
           <img
             className=" w-full h-full rounded-md  object-cover "
-            src={"/drug1.jpg" || product.productImg}
+            src={ product.productImg}
             alt={product.productName}
           />
           {/* {console.log(product?.productImg)} */}

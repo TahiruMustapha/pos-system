@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns:[
             {
                 protocol:"https",
-                hostname:"media.geeksforgeeks.org"
+                hostname:"res.cloudinary.com"
             }
         ]
     }
