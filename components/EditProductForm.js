@@ -28,15 +28,7 @@ const EditProductForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedProduct = {
-      newProductImg,
-      newProductName,
-      newProductPrice,
-      newProductDescription,
-      newProductCategory,
-      newProductQuantity,
-      newProductName,
-    };
+    setLoading(true);
     try {
       const res = await fetch(`/api/editProduct/${id}`, {
         method: "PUT",
@@ -50,16 +42,19 @@ const EditProductForm = ({
           newProductDescription,
           newProductCategory,
           newProductQuantity,
-          newProductName
+          newProductName,
         }),
       });
       if (!res.ok) {
         throw new Error("Failed to update product!");
       }
+      setLoading(false)
+      toast.success("Product updated successfully! ");
       router.refresh();
       router.push("/dashboard");
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   };
 

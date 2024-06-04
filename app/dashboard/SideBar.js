@@ -11,9 +11,10 @@ import { CgProfile } from "react-icons/cg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 const SideBar = () => {
-  const [active, setActive] = useState(false);
   const path = usePathname();
+  const { data: session } = useSession();
   const isActive = (pathName) => {
     return path === pathName;
   };
@@ -30,10 +31,16 @@ const SideBar = () => {
           </div>
           <HiMenuAlt3 className=" cursor-pointer font-semibold text-xl text-white" />
         </div>
-        <div className={isActive('/dashboard')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+        <div
+          className={
+            isActive("/dashboard")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
           <MdDashboard
             className={
-              isActive('/dashboard')
+              isActive("/dashboard")
                 ? ` text-2xl text-blue-500`
                 : `
               text-2xl text-gray-600`
@@ -42,7 +49,7 @@ const SideBar = () => {
           <Link
             href={"/dashboard"}
             className={
-              isActive('/dashboard')
+              isActive("/dashboard")
                 ? `text-blue-500 cursor-pointer `
                 : ` text-gray-500 cursor-pointer`
             }
@@ -51,10 +58,18 @@ const SideBar = () => {
             Dashboard
           </Link>
         </div>
-        <div className={isActive('/dashboard/addProduct')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
+        <div
+          className={
+            isActive("/dashboard/addProduct")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
           <BiImageAdd
             className={
-              isActive('/dashboard/addProduct') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
+              isActive("/dashboard/addProduct")
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
             }
           />
           <Link
@@ -69,10 +84,20 @@ const SideBar = () => {
             Add Product
           </Link>
         </div>
-        <div className={isActive('/dashboard/profile')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
-          <CgProfile className={
-              isActive('/dashboard/profile') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
-            } />
+        <div
+          className={
+            isActive("/dashboard/profile")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
+          <CgProfile
+            className={
+              isActive("/dashboard/profile")
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
+            }
+          />
           <Link
             href={"/dashboard/profile"}
             className={
@@ -84,14 +109,24 @@ const SideBar = () => {
             Profile
           </Link>
         </div>
-        <div className={isActive('/dashboard/editProfile')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
-          <FaChartColumn className={
-              isActive('/dashboard/editProfile') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
-            } />
-          <Link
-            href={"/dashboard/editProfile"}
+        <div
+          className={
+            isActive(`/dashboard/editProfile/${session?.user?._id}`)
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
+          <FaChartColumn
             className={
-              isActive("/dashboard/editProfile")
+              isActive(`/dashboard/editProfile/${session?.user?._id}`)
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
+            }
+          />
+          <Link
+            href={`/dashboard/editProfile/${session?.user?._id}`}
+            className={
+              isActive(`/dashboard/editProfile/${session?.user?._id}`)
                 ? `text-blue-500 cursor-pointer`
                 : `cursor-pointer text-gray-600`
             }
@@ -100,10 +135,20 @@ const SideBar = () => {
           </Link>
         </div>
 
-        <div className={isActive('/dashboard/reportBug')?`w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`:`w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`}>
-          <FaMessage className={
-              isActive('/dashboard/reportBug') ? `text-2xl text-blue-500` : ` text-2xl text-gray-600`
-            } />
+        <div
+          className={
+            isActive("/dashboard/reportBug")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
+          <FaMessage
+            className={
+              isActive("/dashboard/reportBug")
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
+            }
+          />
           <Link
             href={"/dashboard/reportBug"}
             className={

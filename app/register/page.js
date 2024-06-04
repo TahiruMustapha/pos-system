@@ -8,12 +8,15 @@ import { useRouter } from "next/navigation";
 const login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bio, setBio] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!username || !password || !email || !phone || !bio) {
       setError("All fields are necessary!");
       return;
     }
@@ -40,6 +43,9 @@ const login = () => {
         body: JSON.stringify({
           username,
           password,
+          email,
+          phone,
+          bio
         }),
       });
 
@@ -78,6 +84,30 @@ const login = () => {
               className=" w-full placeholder: text-sm outline-none py-2 shadow-md bg-blue-50 px-2 rounded-sm"
               type="password"
               placeholder="Enter Password"
+            />
+          </div>
+          <div className=" mt-3">
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              className=" w-full placeholder: text-sm outline-none py-2 shadow-md bg-blue-50 px-2 rounded-sm"
+              type="email"
+              placeholder="Enter email"
+            />
+          </div>
+          <div className=" mt-3">
+            <input
+              onChange={(e) => setPhone(e.target.value)}
+              className=" w-full placeholder: text-sm outline-none py-2 shadow-md bg-blue-50 px-2 rounded-sm"
+              type="tel"
+              placeholder="Enter phone"
+            />
+          </div>
+          <div className=" mt-3">
+            <input
+              onChange={(e) => setBio(e.target.value)}
+              className=" w-full placeholder: text-sm outline-none py-2 shadow-md bg-blue-50 px-2 rounded-sm"
+              type="text"
+              placeholder="Enter bio"
             />
           </div>
 

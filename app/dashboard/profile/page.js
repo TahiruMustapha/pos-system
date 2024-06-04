@@ -1,9 +1,11 @@
+import ProfileDetails from '@/components/ProfileDetails'
 import React from 'react'
 
-const Profile = () => {
+const Profile = async () => {
+  // const res  =  await fetch("/api/register")
   return (
     <div>
-      Profile
+      <ProfileDetails/> 
     </div>
   )
 }
