@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdProductionQuantityLimits } from "react-icons/md";
 import { BiImageAdd } from "react-icons/bi";
-import { FaChartColumn } from "react-icons/fa6";
+import { FaChartColumn, FaUsers } from "react-icons/fa6";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { FaMessage } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
@@ -132,6 +132,32 @@ const SideBar = () => {
             }
           >
             Edit profile
+          </Link>
+        </div>
+        <div
+          className={
+            isActive("/dashboard/users")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
+          <FaUsers
+            className={
+              isActive("/dashboard/users")
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
+            }
+          />
+          <Link
+            href={"/dashboard/users"}
+            className={
+              isActive("/dashboard/users")
+                ? `text-blue-500 cursor-pointer`
+                : `cursor-pointer text-gray-600`
+            }
+          >
+           
+            Users
           </Link>
         </div>
 

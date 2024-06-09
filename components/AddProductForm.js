@@ -1,11 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddProduct = () => {
   const [productImg, setProductImg] = useState(false);
- 
+  const router = useRouter();
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -113,6 +114,7 @@ const AddProduct = () => {
 
       setLoading(false);
       toast.success("Product added successfully! ");
+      router.push("/dashboard")
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -130,12 +132,12 @@ const AddProduct = () => {
             </p>
             <div className="border-gray-400 mt-1 mb-2 px-2 py-2 rounded-md  border-[1px]">
               <input
-                {...register("productImg", { required: true }) }
+                {...register("productImg", { required: true })}
                 id="productImg"
                 className=" text-gray-400"
                 type="file"
                 accept="image/*"
-                onChange={()=>setProductImg(true)}
+                onChange={() => setProductImg(true)}
               />
               {errors.productImg && (
                 <p className="mt-2 text-sm text-red-600 dark:text-red-500">

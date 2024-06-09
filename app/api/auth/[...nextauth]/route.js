@@ -27,6 +27,7 @@ const authOptions = {
           if (!passwordMatch) {
             return null;
           }
+          
           return user;
         } catch (error) {
           console.log(error);

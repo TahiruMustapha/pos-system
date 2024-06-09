@@ -15,7 +15,14 @@ const ProfileDetails = () => {
           <FaUserCircle className=" w-full text-9xl text-gray-400" />
         </div>
         <div>
-          <p className="  border-b-gray-300 border-b-[1px] text-gray-600 font-semibold">
+        <p className="  border-b-gray-300 border-b-[1px] text-gray-600 font-semibold">
+            {" "}
+            userType:{" "}
+            <span className=" font-normal text-gray-500">
+              {session?.user.userType}
+            </span>{" "}
+          </p>
+          <p className="  border-b-gray-300 mt-4 border-b-[1px] text-gray-600 font-semibold">
             {" "}
             Username:{" "}
             <span className=" font-normal text-gray-500">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Layout = () => {
+const  Layout = () => {
   return (
     <div className=" w-full h-screen bg-blue-800">
       <header className="  py-4">

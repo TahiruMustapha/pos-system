@@ -10,7 +10,7 @@ const page = async ({ params: { id } }) => {
   return (
     <div>
       <EditProfile
-        id={id}
+        id={id.toString()}
         username={username}
         email={email}
         phone={phone}

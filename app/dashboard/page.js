@@ -34,7 +34,7 @@ const page = async ({ searchParams }) => {
   ).length;
 
   return (
-    <div className=" pb-6">
+    <div className=" pb-6 ">
       {/* Inventory stats */}
       <div className=" mt-3 border-gray-300 border-b-[1px] pb-2 ">
         <p className=" text-2xl text-gray-500">Inventory Stats</p>
@@ -88,7 +88,7 @@ const page = async ({ searchParams }) => {
       {/* Inventory items */}
       {/* Table */}
 
-      <table className=" mt-3 w-full  ">
+      <table className=" mt-3 w-full  overflow-y-auto ">
         <thead className=" border-b-blue-600 border-b-[2px] border-t-blue-600 border-t-[2px]">
           <tr className="  ">
             <th className=" p-3 text-sm text-gray-600">s/n</th>
@@ -100,11 +100,11 @@ const page = async ({ searchParams }) => {
             <th className=" p-3 text-sm text-gray-600">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="" >
           {products.map((product, index) => (
             <tr
               key={product._id}
-              className=" bg-white my-1 border-b-gray-500 border-[1px] text-center  "
+              className=" bg-white  my-1 border-b-gray-500 border-[1px] text-center  "
             >
               <td className=" p-3  ">{index + 1}</td>
               <td className=" p-3 ">{product.productName}</td>
@@ -121,7 +121,7 @@ const page = async ({ searchParams }) => {
                 <Link href={`/dashboard/editProduct/${product._id}`}>
                   <FaEdit className=" text-green-500 text-xl cursor-pointer" />
                 </Link>
-                 <DeleteBtn id = {product._id}/>
+                 <DeleteBtn id = {product._id.toString()}/>
               </td>
             </tr>
           ))}
