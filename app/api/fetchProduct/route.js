@@ -13,7 +13,8 @@ export const fetchProducts = async (q, req, res) => {
     return products;
    
   } catch (error) {
-    throw new Error("Unable to add product!");
+    throw new Error("Unable to fetch product!");
+    // console.log(error)
   }
 };
 export const fetchProductsById = async (id) => {
