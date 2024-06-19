@@ -106,7 +106,7 @@ const login = () => {
             Forgot Password
           </Link>
           <p className=" text-gray-500">
-            Don't have an account?{" "}
+            Don't have an account?
             <Link className=" text-blue-600" href={"/register"}>
               Register
             </Link>

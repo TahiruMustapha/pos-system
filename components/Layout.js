@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-const  Layout = () => {
+const Layout = () => {
   return (
-    <div className=" w-full h-screen bg-blue-800">
+    <div className=" w-full h-full  bg-[#050C9C]">
       <header className="  py-4">
         <nav className=" w-[80%] mx-auto flex items-center justify-between">
           <div className=" border-white border-[2px] w-8 h-8 flex items-center justify-center rounded-full">
@@ -33,7 +33,7 @@ const  Layout = () => {
           </h2>
           <p className=" text-white text-xl mb-3">
             Inventory sytem to support and manage products in the pharmacy in
-            real tim and integrated to make it easier to develop your business.
+            real time and integrated to make it easier to develop your business.
           </p>
           <p className=" border-white border-[2px] inline-block text-white font-semibold rounded-md capitalize mt-3 px-3 py-2">
             Free Trial 1 month
@@ -54,7 +54,7 @@ const  Layout = () => {
           </div>
         </div>
         <div className=" flex-1">
-          <img src="/med3.png" className=" " />
+          <img src="/med3.png" />
         </div>
       </div>
     </div>

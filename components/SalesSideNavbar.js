@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { TbLogout } from "react-icons/tb";
+import { IoCartOutline } from "react-icons/io5";
 const SideBar = () => {
   const path = usePathname();
   const { data: session } = useSession();
@@ -112,27 +113,27 @@ const SideBar = () => {
         </div>
         <div
           className={
-            isActive(`/clientsProductsPage/report`)
+            isActive(`/clientsProductsPage/cart`)
               ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
               : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
           }
         >
-          <FaChartColumn
+          <IoCartOutline
             className={
-              isActive(`/clientsProductsPage/report`)
+              isActive(`/clientsProductsPage/cart`)
                 ? `text-2xl text-blue-500`
                 : ` text-2xl text-gray-600`
             }
           />
           <Link
-            href={`/clientsProductsPage/report`}
+            href={`/clientsProductsPage/cart`}
             className={
-              isActive(`/clientsProductsPage/report`)
+              isActive(`/clientsProductsPage/cart`)
                 ? `text-blue-500 cursor-pointer`
                 : `cursor-pointer text-gray-600`
             }
           >
-            Sale Reversal
+            Cart
           </Link>
         </div>
         <div
