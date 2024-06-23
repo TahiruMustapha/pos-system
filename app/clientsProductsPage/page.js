@@ -12,17 +12,29 @@ import { useSession } from "next-auth/react";
 import { CiMoneyBill } from "react-icons/ci";
 import { CgToday } from "react-icons/cg";
 import SalesSideNavbar from "../../components/SalesSideNavbar";
+import Link from "next/link";
 const page = () => {
   const { data: session } = useSession();
   const [profile, setProfile] = useState(true);
   const [yesterday, setYesterday] = useState(false);
   const [currentWeek, setCurrentWeek] = useState(false);
 
-  const [dateTime, setDateTime] = useState(new Date());
+  // const [dateTime, setDateTime] = useState(new Date());
+  const [dateTime, setDateTime] = useState({ date: "", time: "" });
 
   useEffect(() => {
     const updateDateTime = () => {
-      setDateTime(new Date());
+      const now = new Date();
+      const dateOptions = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      setDateTime({
+        date: now.toLocaleDateString(undefined, dateOptions),
+        time: now.toLocaleTimeString(),
+      });
     };
     updateDateTime();
     // Update time every second
@@ -30,18 +42,9 @@ const page = () => {
     // Cleanup timer on component unmount
     return () => clearInterval(timer);
   }, []);
-  // if (!dateTime) {
-  //   // Render placeholder while dateTime is null
-  //   return;
-  // }
 
-  const formattedDate = dateTime.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const formattedTime = dateTime.toLocaleTimeString();
+  const formattedDate = dateTime.date;
+  const formattedTime = dateTime.time;
   return (
     <div className="h-screen ">
       <div className=" w-full  h-full flex flex-row">
@@ -64,7 +67,10 @@ const page = () => {
                 <IoSettingsOutline className=" cursor-pointer text-xl" />
                 <IoIosNotificationsOutline className=" cursor-pointer text-xl" />
                 <div className=" w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-300">
-                  <FaUserAlt className=" text-2xl" />
+                  <Link href={"/clientsProductsPage/profile"}>
+                    {" "}
+                    <FaUserAlt className=" text-2xl" />
+                  </Link>
                 </div>
               </div>
             </nav>
@@ -160,7 +166,7 @@ const page = () => {
                     </div>
                   )}
                 </div>
-                <div className=" w-[45%] border-[#3ABEF9] border-[2px] text-center rounded-md bg-[#1A2130] shadow-md px-2 py-2">
+                <div className=" w-[45%] border-[#3ABEF9] border-[2px] text-center rounded-md bg-[#1A2130] shadow-md px-2 py-4">
                   <p className=" text-2xl text-white">{formattedDate} </p>
                   <p className=" text-4xl text-white">{formattedTime}</p>
                 </div>

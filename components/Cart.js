@@ -2,6 +2,7 @@
 // import { fetchProductsById } from "@/app/api/fetchProduct/route";
 import { Store } from "@/redux/store";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { BsCart3 } from "react-icons/bs";
@@ -14,6 +15,7 @@ import { TiShoppingCart } from "react-icons/ti";
 
 const Cart = () => {
   const { state, dispatch } = useContext(Store);
+  const router = useRouter();
   const {
     cart: { cartItems },
   } = state;
@@ -30,12 +32,12 @@ const Cart = () => {
     toast.success("Product updated in the cart..");
   };
   return (
-    <div className=" w-full py-3 pl-3">
+    <div className="h-full  w-full py-3 pl-3">
       <h1 className=" mb-4 text-xl text-gray-600"> Shopping Cart</h1>
       {cartItems.length === 0 ? (
-        <div>
+        <div className=" w-full text-2xl h-[80vh] flex flex-col items-center justify-center ">
           Cart is Empty!!{" "}
-          <Link href={"/clientsProductsPage/startSales"}>
+          <Link className=" text-3xl  text-blue-700" href={"/clientsProductsPage/startSales"}>
             Go to Product Page
           </Link>
         </div>
@@ -65,14 +67,18 @@ const Cart = () => {
                     </td>
                     <td className=" text-right  p-3">
                       <select
-                      className=" outline-none border-none"
+                        className=" outline-none border-none"
                         value={item.quantity}
                         onChange={(e) =>
                           updateCartHandler(item, e.target.value)
                         }
                       >
                         {[...Array(item.productQuantity).keys()].map((x) => (
-                          <option className="outline-none border-none" key={x + 1} value={x + 1}>
+                          <option
+                            className="outline-none border-none"
+                            key={x + 1}
+                            value={x + 1}
+                          >
                             {x + 1}
                           </option>
                         ))}
@@ -106,7 +112,9 @@ const Cart = () => {
                     </li>
                     <li>
                       <button
-                        onClick={() => router.push("Login?redirect=/Shipping")}
+                        onClick={() =>
+                          router.push("/clientsProductsPage/checkout")
+                        }
                         className=" bg-[#FFC700]  w-full px-1 py-1 rounded-md"
                       >
                         Check Out

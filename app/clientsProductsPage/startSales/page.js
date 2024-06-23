@@ -16,7 +16,7 @@ const page = async () => {
   // const data = await fetchProductsById(id);
   return (
     <div>
-      <StartSales product={product}  />
+      <StartSales products={product}  />
     </div>
   );
 };

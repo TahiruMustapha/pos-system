@@ -1,6 +1,6 @@
 "use client";
 import { Store } from "@/redux/store";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsCart3 } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosArrowRoundDown } from "react-icons/io";
@@ -11,9 +11,12 @@ import { useRouter } from "next/navigation";
 const SingleProductPage = ({ product }) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, []);
+  // console.log(cartItemsCount)
   const router = useRouter();
-  //   const existingItem = state.cart.cartItems.find((x) => x._id === product._id);
-  //   const quantity = existingItem ? existingItem.quantity + 1 : 1;
   const addToCartHandler = async () => {
     const existingItem = state.cart.cartItems.find(
       (x) => x._id === product._id
@@ -25,7 +28,8 @@ const SingleProductPage = ({ product }) => {
     }
     toast.success("Product added to cart");
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    router.push('/clientsProductsPage/cart')
+    router.push("/clientsProductsPage/cart");
+  
   };
   return (
     <div className=" w-full">
@@ -42,20 +46,15 @@ const SingleProductPage = ({ product }) => {
           <IoIosArrowRoundDown className=" text-2xl" />
         </div>
         <Link href={`/clientsProductsPage/cart`}>
-          <div className=" relative  flex items-center gap-2">
-            <p className=" text-sm flex font-semibold items-center px-2  min-w-[100px]    bg-gray-500  py-2 rounded-lg text-white">
-              <BsCart3 className=" cursor-pointer mr-1 font-semibold    text-xl" />
-              0
-            </p>
+          <div className=" relative  flex items-center gap-4">
+            <BsCart3 className=" text-gray-500 font-semibold cursor-pointer mr-1     text-xl" />
+            
             <div className=" w-10 h-10 cursor-pointer rounded-full flex items-center justify-center bg-gray-300">
               <FaUserAlt className=" text-2xl" />
             </div>
-
-            <span className="  absolute right-11 top-0 bg-[#FF0000] text-white flex items-center justify-center w-4 h-4 text-xs  rounded-full">
-              {cart.cartItems.length > 0 ? (
-                <span>
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                </span>
+            <span className="  absolute right-12 top-0 bg-[#FF0000] text-white flex items-center justify-center w-4 h-4 text-xs  rounded-full">
+              {cartItemsCount > 0 ? (
+                <span>{cartItemsCount}</span>
               ) : (
                 <span>0</span>
               )}

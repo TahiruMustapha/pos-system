@@ -88,27 +88,27 @@ const SideBar = () => {
         </div>
         <div
           className={
-            isActive("/clientsProductsPage/report")
+            isActive("/clientsProductsPage/profile")
               ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
               : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
           }
         >
           <CgProfile
             className={
-              isActive("/clientsProductsPage/report")
+              isActive("/clientsProductsPage/profile")
                 ? `text-2xl text-blue-500`
                 : ` text-2xl text-gray-600`
             }
           />
           <Link
-            href={"/clientsProductsPage/report"}
+            href={"/clientsProductsPage/profile"}
             className={
-              isActive("/clientsProductsPage/report")
+              isActive("/clientsProductsPage/profile")
                 ? `text-blue-500 cursor-pointer`
                 : `cursor-pointer text-gray-600`
             }
           >
-            Report
+            Profile
           </Link>
         </div>
         <div
