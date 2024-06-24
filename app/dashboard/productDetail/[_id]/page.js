@@ -4,7 +4,7 @@ import React from "react";
 
 const SingleProductPage = async ({ params: { _id } }) => {
   const product = await fetchProductsById(_id);
- 
+
   return (
     <div>
       <ProductDetail product={product} />

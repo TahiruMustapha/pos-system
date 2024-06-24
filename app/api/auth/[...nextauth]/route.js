@@ -55,9 +55,9 @@ const authOptions = {
     }
   },
  
-  pages: {
-    signIn: "/dashboard",
-  },
+  // pages: {
+  //   signIn: "/dashboard",
+  // },
   secret: process.env.NEXTAUTH_SECRET,
 };
 const handler = NextAuth(authOptions);
