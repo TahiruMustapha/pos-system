@@ -1,8 +1,7 @@
+
+import React from "react";
 import { fetchProductsById } from "@/app/api/fetchProduct/route";
 import EditProductForm from "@/components/EditProductForm";
-import { connect } from "@/utils/db";
-import React from "react";
-
 
 const EditProductPage = async ({ params: { id } }) => {
  
