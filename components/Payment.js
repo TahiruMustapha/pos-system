@@ -37,7 +37,7 @@ const Payment = () => {
       <div className=" w-[50%]  bg-white shadow-md border-gray-200 border-[1px] px-3 py-3 rounded-md">
         <form onSubmit={submitHandler}>
           <h1 className=" text-center mb-4 text-2xl">Payment Method</h1>
-          {["Momo", "Ready cash"].map((payment) => (
+          {[" Voda cash","Momo", "Ready cash"].map((payment) => (
             <div key={payment} className=" mb-4">
               <input
                 name="paymentMethod"
