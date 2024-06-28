@@ -2,7 +2,8 @@
 import { Store } from "@/redux/store";
 import React, { useContext, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { PrintReceipt } from "./PrintReceipt";
+import PrintReceipt from "./PrintReceipt";
+// import { PrintReceipt } from "./PrintReceipt";
 
 const SuccessPage = () => {
   const componentRef = useRef();

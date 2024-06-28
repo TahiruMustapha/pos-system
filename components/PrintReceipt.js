@@ -3,7 +3,7 @@ import { Store } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import React, { useContext, useEffect, useState } from "react";
 
-export const PrintReceipt = React.forwardRef((props, ref) => {
+const PrintReceipt = React.forwardRef((props, ref) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems } = cart;
@@ -158,3 +158,4 @@ export const PrintReceipt = React.forwardRef((props, ref) => {
    
   );
 });
+export default PrintReceipt;
