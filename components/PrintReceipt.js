@@ -9,12 +9,7 @@ export const PrintReceipt = React.forwardRef((props, ref) => {
   const { cartItems } = cart;
   const { checkOutInfo } = cart;
   const { paymentMethod } = cart;
-  // console.log(paymentMethod)
-  // const {
-  //   cart: { cartItems },
-  // } = state;
   const { data: session } = useSession();
-
   const [dateTime, setDateTime] = useState({ date: "", time: "" });
   useEffect(() => {
     const updateDateTime = () => {
@@ -26,28 +21,27 @@ export const PrintReceipt = React.forwardRef((props, ref) => {
         day: "numeric",
       };
       let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12;
       hours = hours ? hours : 12;
-      const hoursStr = hours.toString().padStart(2, '0');
+      const hoursStr = hours.toString().padStart(2, "0");
       const timeString = `${hoursStr}:${minutes} ${ampm}`;
       setDateTime({
         date: now.toLocaleDateString(undefined, dateOptions),
         time: timeString,
       });
     };
+
     updateDateTime();
     // Update time every second
     const timer = setInterval(updateDateTime, 1000);
     // Cleanup timer on component unmount
     return () => clearInterval(timer);
   }, []);
-
+ 
   const formattedDate = dateTime.date;
   const formattedTime = dateTime.time;
-  // console.log(checkOutInfo.fullName);
-  // const checkOutDetails = Object.entries(checkOutInfo);
 
   return (
     <div className=" px-2 py-3 w-full" ref={ref}>
@@ -135,10 +129,10 @@ export const PrintReceipt = React.forwardRef((props, ref) => {
 
         <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
           <p>Subtotal</p>
-          <p>
+          {/* <p>
             ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : GHS
             {cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0)}
-          </p>
+          </p> */}
         </div>
       </div>
       <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
@@ -155,12 +149,12 @@ export const PrintReceipt = React.forwardRef((props, ref) => {
       </p>
       <div className=" w-full flex items-center justify-center">
         <img
-        className=" w-[500px] h-[200px] object-cover"
-        src="/barcode.png"
-        alt="barcode"
-      />
+          className=" w-[500px] h-[200px] object-cover"
+          src="/barcode.png"
+          alt="barcode"
+        />
       </div>
-      
     </div>
+   
   );
 });

@@ -8,30 +8,6 @@ import { PaystackButton } from "react-paystack";
 
 const Payment = () => {
   const router = useRouter();
-  // const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
-  // const { cart } = state;
-  // const { checkOutInfo, paymentMethod } = cart;
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   if (!selectedPaymentMethod) {
-  //     return toast.error("Payment method required!");
-  //   }
-  //   dispatch({ type: "SAVE_PAYMENT_METHOD", payload: selectedPaymentMethod });
-  //   Cookies.set(
-  //     "cart",
-  //     JSON.stringify({
-  //       ...cart,
-  //       paymentMethod: selectedPaymentMethod,
-  //     })
-  //   );
-  //   router.push("/clientsProductsPage/pay")
-  // };
-  // useEffect(() => {
-  //   if (!checkOutInfo.address) {
-  //     return router.push("/clientsProductsPage/checkout");
-  //   }
-  //   setSelectedPaymentMethod(paymentMethod || "");
-  // }, [paymentMethod, router, checkOutInfo.address]);
   const { state, dispatch } = useContext(Store);
   const [totalValue, setTotalValue] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -61,7 +37,6 @@ const Payment = () => {
     onSuccess: () =>
       alert("Thanks for doing business with us! Come back soon!!"),
     onClose: () => alert("Wait! Don't leave :("),
-    
   };
   return (
     <div className=" w-full h-screen flex items-center justify-center bg-gray-200 px-3 py-3 my-3">
