@@ -42,7 +42,7 @@ const PrintReceipt = React.forwardRef((props, ref) => {
 
   const formattedDate = dateTime.date;
   const formattedTime = dateTime.time;
-  console.log(cartItems);
+  // console.log(paymentMethod);
   return (
     <div className=" px-2 py-3 w-full" ref={ref}>
       <h1 className=" text-gray-500 font-semibold text-center text-3xl mt-2">
@@ -137,7 +137,7 @@ const PrintReceipt = React.forwardRef((props, ref) => {
       </div>
       <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
         <p>Payment Method</p>
-        <p>{paymentMethod}</p>
+        <p>Mobile Money</p>
       </div>
       <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
         <p>Visa Card</p>
