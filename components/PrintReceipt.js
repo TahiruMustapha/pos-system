@@ -129,10 +129,10 @@ const PrintReceipt = React.forwardRef((props, ref) => {
 
         <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
           <p>Subtotal</p>
-          {/* <p>
+          <p>
             ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : GHS
             {cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0)}
-          </p> */}
+          </p>
         </div>
       </div>
       <div className=" w-full font-semibold mt-3 text-xl flex items-center justify-between">
