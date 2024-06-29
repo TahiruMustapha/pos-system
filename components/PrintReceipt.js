@@ -39,10 +39,10 @@ const PrintReceipt = React.forwardRef((props, ref) => {
     // Cleanup timer on component unmount
     return () => clearInterval(timer);
   }, []);
- 
+
   const formattedDate = dateTime.date;
   const formattedTime = dateTime.time;
-
+  console.log(cartItems);
   return (
     <div className=" px-2 py-3 w-full" ref={ref}>
       <h1 className=" text-gray-500 font-semibold text-center text-3xl mt-2">
@@ -155,7 +155,6 @@ const PrintReceipt = React.forwardRef((props, ref) => {
         />
       </div>
     </div>
-   
   );
 });
 export default PrintReceipt;

@@ -35,14 +35,14 @@ const Payment = () => {
   };
   const handlePaystackSuccessAction = () => {
   
-    dispatch({ type: "CART_CLEAR_ITEMS" });
-    Cookies.set(
-      "cart",
-      JSON.stringify({
-        ...cart,
-        cartItems: [],
-      })
-    );
+    // dispatch({ type: "CART_CLEAR_ITEMS" });
+    // Cookies.set(
+    //   "cart",
+    //   JSON.stringify({
+    //     ...cart,
+    //     cartItems: [],
+    //   })
+    // );
     router.push(`/clientsProductsPage/success`);
       // router.push(
     //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
