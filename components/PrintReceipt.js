@@ -149,7 +149,7 @@ const PrintReceipt = React.forwardRef((props, ref) => {
       </p>
       <div className=" w-full flex items-center justify-center">
         <img
-          className=" w-[500px] h-[200px] object-cover"
+          className=" w-[400px] h-[100px] object-cover"
           src="/barcode.png"
           alt="barcode"
         />
