@@ -13,7 +13,7 @@ import { MdLockReset } from "react-icons/md";
 const page = async () => {
   const product = await products();
  
-  // const data = await fetchProductsById(id);
+  
   return (
     <div>
       <StartSales products={product}  />

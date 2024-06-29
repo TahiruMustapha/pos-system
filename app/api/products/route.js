@@ -5,8 +5,9 @@ export const products = async () => {
   try {
     await connect();
     const product = await AddProduct.find();
+    
     return product;
   } catch (error) {
-    console.log("Unable to fetch product!",error)
+    console.log("Unable to fetch product!", error);
   }
 };

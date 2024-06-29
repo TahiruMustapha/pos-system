@@ -34,7 +34,6 @@ const Payment = () => {
     alert("Please don't leave Benab!");
   };
   const handlePaystackSuccessAction = () => {
-    // Implementation for whatever you want to do with reference and after success call.
     // router.push(
     //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
     // );
