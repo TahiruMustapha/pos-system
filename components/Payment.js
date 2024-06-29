@@ -3,7 +3,6 @@ import { Store } from "@/redux/store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { PaystackButton } from "react-paystack";
 
 const Payment = () => {
@@ -23,40 +22,51 @@ const Payment = () => {
       cart.cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0)
     );
   }, []);
-  const componentProps = {
+  const config = {
+    reference: new Date().getTime().toString(),
     email: checkOutInfo.email,
-    amount: totalPrice * 100,
-    metadata: {
-      name: checkOutInfo.fullName,
-      phone: checkOutInfo.phone,
-    },
+    amount: totalPrice * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey,
+  };
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
 
+    alert("Please don't leave Benab!");
+  };
+  const handlePaystackSuccessAction = () => {
+    // Implementation for whatever you want to do with reference and after success call.
+    // router.push(
+    //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
+    // );
+    dispatch({ type: "CART_CLEAR_ITEMS" });
+    Cookies.set(
+      "cart",
+      JSON.stringify({
+        ...cart,
+        cartItems: [],
+      })
+    );
+    router.push(`http://localhost:3000/clientsProductsPage/success`);
+  };
+  const componentProps = {
+    // email: checkOutInfo.email,
+    // amount: totalPrice * 100,
+    // metadata: {
+    //   name: checkOutInfo.fullName,
+    //   phone: checkOutInfo.phone,
+    // },
+    // publicKey,
+    ...config,
     currency: "GHS",
     text: "Pay Now",
-    onSuccess: () =>
-      alert("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => alert("Wait! Don't leave :("),
+    onSuccess: handlePaystackSuccessAction,
+    onClose: handlePaystackCloseAction,
   };
   return (
     <div className=" w-full h-screen flex items-center justify-center bg-gray-200 px-3 py-3 my-3">
       <div className=" w-[50%]  bg-white shadow-md border-gray-200 border-[1px] px-3 py-3 rounded-md">
         <h1 className=" text-center mb-4 text-2xl">Total Amount</h1>
-        {/* {[" Voda cash","Momo", "Ready cash"].map((payment) => (
-            <div key={payment} className=" mb-4">
-              <input
-                name="paymentMethod"
-                className=" p-2 outline-none"
-                id={payment}
-                type="radio"
-                checked={selectedPaymentMethod === payment}
-                onChange={() => setSelectedPaymentMethod(payment)}
-              />
-              <label className=" ml-1" htmlFor={payment}>
-                {payment}
-              </label>
-            </div>
-          ))} */}
+
         <p className="pb-2 text-center  font-semibold  ">
           Subtotal ({totalValue}) : GHS
           {totalPrice}
