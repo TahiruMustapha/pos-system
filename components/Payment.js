@@ -34,9 +34,7 @@ const Payment = () => {
     alert("Please don't leave Benab!");
   };
   const handlePaystackSuccessAction = () => {
-    // router.push(
-    //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
-    // );
+  
     dispatch({ type: "CART_CLEAR_ITEMS" });
     Cookies.set(
       "cart",
@@ -45,7 +43,10 @@ const Payment = () => {
         cartItems: [],
       })
     );
-    router.push(`http://localhost:3000/clientsProductsPage/success`);
+    router.push(`/clientsProductsPage/success`);
+      // router.push(
+    //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
+    // );
   };
   const componentProps = {
     // email: checkOutInfo.email,
