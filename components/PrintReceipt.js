@@ -6,11 +6,20 @@ import React, { useContext, useEffect, useState } from "react";
 const PrintReceipt = React.forwardRef((props, ref) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  const { cartItems } = cart;
+  // const { cartItems } = cart;
   const { checkOutInfo } = cart;
   const { paymentMethod } = cart;
+  // const { cartInfo } = state;
+  // console.log(cartInfo);
   const { data: session } = useSession();
   const [dateTime, setDateTime] = useState({ date: "", time: "" });
+  const [cartItems, setCartItems] = useState([]);
+  useEffect(() => {
+    const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
+    if (storedCartItems) {
+      setCartItems(storedCartItems);
+    }
+  }, []);
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();

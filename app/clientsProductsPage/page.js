@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import SideBar from "../dashboard/SideBar";
 import { LiaSearchSolid } from "react-icons/lia";
@@ -13,6 +13,7 @@ import { CiMoneyBill } from "react-icons/ci";
 import { CgToday } from "react-icons/cg";
 import SalesSideNavbar from "../../components/SalesSideNavbar";
 import Link from "next/link";
+import { Store } from "@/redux/store";
 const page = () => {
   const { data: session } = useSession();
   const [profile, setProfile] = useState(true);
@@ -21,7 +22,9 @@ const page = () => {
 
   // const [dateTime, setDateTime] = useState(new Date());
   const [dateTime, setDateTime] = useState({ date: "", time: "" });
-
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+  const { cartItems } = cart;
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
@@ -45,10 +48,28 @@ const page = () => {
 
   const formattedDate = dateTime.date;
   const formattedTime = dateTime.time;
+  const [cartInfo, setCartInfo] = useState([]);
+  const [currentDate, setCurrentDate] = useState("");
+  useEffect(() => {
+    const storedDate = JSON.parse(localStorage.getItem("currentDate"));
+    if (storedDate) {
+      setCurrentDate(storedDate);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Retrieve the cartData array from local storage
+    const storedCartItems = JSON.parse(
+      localStorage.getItem("cartItemsHistory")
+    );
+    if (storedCartItems) {
+      setCartInfo(storedCartItems);
+    }
+  }, []);
+  // console.log(typeof cartInfo);
   return (
     <div className="h-screen ">
       <div className=" w-full  h-full flex flex-row">
-        <div className="  ">{/* <SalesSideNavbar/> */}</div>
         <div className=" w-full  ">
           <div className=" h-full">
             <nav className=" flex items-center justify-between py-3 px-3">
@@ -216,30 +237,59 @@ const page = () => {
                       />
                     </div>
                   </div>
-                  <table className="mt-3 w-full  overflow-y-auto ">
-                    <thead className=" border-b-blue-600 border-b-[2px] border-t-blue-600 border-t-[2px]">
-                      <tr className="  ">
-                        <th className=" p-3 text-sm text-gray-600">s/n</th>
-                        <th className=" p-3 text-sm text-gray-600">
-                          Product Name
-                        </th>
-                        <th className=" p-3 text-sm text-gray-600">Quantity</th>
-                        <th className=" p-3 text-sm text-gray-600">
-                          Unit Price
-                        </th>
-                        <th className=" p-3 text-sm text-gray-600">
-                          Total Price
-                        </th>
-                        <th className=" p-3 text-sm text-gray-600">
-                          Sale Date
-                        </th>
-                        {/* <th className=" p-3 text-sm text-gray-600">Action</th> */}
-                      </tr>
-                    </thead>
-                  </table>
-                  <p className=" mt-3  flex items-center justify-center text-gray-500 text-center">
-                    You've made no sales today! {session?.user.username}
-                  </p>
+                  {cartInfo.length >= 1 ? (
+                    <table className="mt-3 w-full  overflow-y-auto ">
+                      <thead className=" border-b-blue-600 border-b-[2px] border-t-blue-600 border-t-[2px]">
+                        <tr className="  ">
+                          <th className=" p-3 text-sm text-gray-600">s/n</th>
+                          <th className=" p-3 text-sm text-gray-600">
+                            Product Name
+                          </th>
+                          <th className=" p-3 text-sm text-gray-600">
+                            Quantity
+                          </th>
+                          <th className=" p-3 text-sm text-gray-600">
+                            Unit Price
+                          </th>
+                          <th className=" p-3 text-sm text-gray-600">
+                            Total Price
+                          </th>
+                          <th className=" p-3 text-sm text-gray-600">
+                            Sale Date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cartInfo.map((product, index) => (
+                          <tr
+                            className=" border-b-black border-b-[2px] text-center"
+                            key={product._id}
+                          >
+                            <td className=" p-3  font-semibold">{index}</td>
+                            <td className=" p-3  font-semibold">
+                              {product.productName}
+                            </td>
+                            <td className=" p-3  font-semibold">
+                              {product.quantity}
+                            </td>
+                            <td className=" p-3  font-semibold">
+                              GHS {product.productPrice}
+                            </td>
+                            <td className=" p-3  font-semibold">
+                              GHS {product.quantity * product.productPrice}
+                            </td>
+                            <td className=" p-3  font-semibold">
+                              {currentDate}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p className=" mt-3  flex items-center justify-center text-gray-500 text-center">
+                      You've made no sales today! {session?.user.username}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

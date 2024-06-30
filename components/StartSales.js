@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 const StartSalesPage = ({ products }) => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
+  
 
   const [cartItemsCount, setCartItemsCount] = useState(0);
   useEffect(() => {
@@ -93,7 +94,9 @@ const StartSalesPage = ({ products }) => {
                       <Link
                         href={`/clientsProductsPage/products/${products._id}`}
                       >
-                        <p className=" text-blue-700 mt-2">{products.productName}</p>
+                        <p className=" text-blue-700 mt-2">
+                          {products.productName}
+                        </p>
                       </Link>
                       <p className=" text-red-600 font-semibold">
                         {" "}

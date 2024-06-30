@@ -15,6 +15,9 @@ const Payment = () => {
   // } = state;
   const { cart } = state;
   const { checkOutInfo } = cart;
+  const { cartItems } = cart;
+  // const { cartInfo } = state;
+  // console.log(cartInfo);
   const publicKey = "pk_test_db4e0085cf211bad348d0f063851f27f6ec7ebb9";
   useEffect(() => {
     setTotalValue(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -34,19 +37,35 @@ const Payment = () => {
     alert("Please don't leave Benab!");
   };
   const handlePaystackSuccessAction = () => {
-  
-    // dispatch({ type: "CART_CLEAR_ITEMS" });
-    // Cookies.set(
-    //   "cart",
-    //   JSON.stringify({
-    //     ...cart,
-    //     cartItems: [],
-    //   })
-    // );
+    const currentDate = new Date().toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    localStorage.setItem("currentDate", JSON.stringify(currentDate));
+    //CartItems for receipt
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    //CartItems for user history retrieved
+    // const existingCartItemHistory =
+    //   JSON.parse(localStorage.getItem("cartItemsHistory"));
+
+       // Append the new cartItems array to the existing data
+    // existingCartItemHistory.push(cartItems);
+    localStorage.setItem(
+      "cartItemsHistory",
+      JSON.stringify(cartItems)
+    );
+    dispatch({ type: "CART_CLEAR_ITEMS" });
+    Cookies.set(
+      "cart",
+      JSON.stringify({
+        ...cart,
+        cartItems: [],
+      })
+    );
     router.push(`/clientsProductsPage/success`);
-      // router.push(
-    //   `https://pos-system-five.vercel.app/clientsProductsPage/success`
-    // );
   };
   const componentProps = {
     // email: checkOutInfo.email,
