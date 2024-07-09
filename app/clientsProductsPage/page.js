@@ -66,7 +66,7 @@ const page = () => {
       setCartInfo(storedCartItems);
     }
   }, []);
-  // console.log(typeof cartInfo);
+  console.log("Hello world!");
   return (
     <div className="h-screen ">
       <div className=" w-full  h-full flex flex-row">
