@@ -114,7 +114,7 @@ const AddProduct = () => {
 
       setLoading(false);
       toast.success("Product added successfully! ");
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (error) {
       console.log(error);
       setLoading(false);
