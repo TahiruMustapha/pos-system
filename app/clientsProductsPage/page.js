@@ -25,6 +25,7 @@ const page = () => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const { cartItems } = cart;
+  // console.log(cartItems)
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
@@ -59,6 +60,14 @@ const page = () => {
 
   useEffect(() => {
     // Retrieve the cartData array from local storage
+    // const localStorageContent = localStorage.getItem("cartItemsHistory");
+    // let salesHistory;
+    // if (localStorageContent === null) {
+    //   salesHistory = [];
+    // }else{
+    //   salesHistory = JSON.parse(localStorageContent)
+    // }
+    // salesHistory.push(cartItems)
     const storedCartItems = JSON.parse(
       localStorage.getItem("cartItemsHistory")
     );
@@ -66,7 +75,8 @@ const page = () => {
       setCartInfo(storedCartItems);
     }
   }, []);
-  console.log("Hello world!");
+//  console.log(typeof(cartInfo))
+// console.log(cartInfo)
   return (
     <div className="h-screen ">
       <div className=" w-full  h-full flex flex-row">
@@ -259,31 +269,37 @@ const page = () => {
                           </th>
                         </tr>
                       </thead>
+                      {cartInfo.map((product, index) => (
                       <tbody>
-                        {cartInfo.map((product, index) => (
-                          <tr
+                          {
+                            product.map((salesHistory)=>(
+<tr
                             className=" border-b-black border-b-[2px] text-center"
-                            key={product._id}
+                            key={salesHistory._id}
                           >
                             <td className=" p-3  font-semibold">{index}</td>
                             <td className=" p-3  font-semibold">
-                              {product.productName}
+                              {salesHistory.productName}
                             </td>
                             <td className=" p-3  font-semibold">
-                              {product.quantity}
+                              {salesHistory.quantity}
                             </td>
                             <td className=" p-3  font-semibold">
-                              GHS {product.productPrice}
+                              GHS {salesHistory.productPrice}
                             </td>
                             <td className=" p-3  font-semibold">
-                              GHS {product.quantity * product.productPrice}
+                              GHS {salesHistory.quantity * salesHistory.productPrice}
                             </td>
                             <td className=" p-3  font-semibold">
                               {currentDate}
                             </td>
                           </tr>
-                        ))}
+                            ))
+                          }
+                          
+                      
                       </tbody>
+                        ))}
                     </table>
                   ) : (
                     <p className=" mt-3  flex items-center justify-center text-gray-500 text-center">

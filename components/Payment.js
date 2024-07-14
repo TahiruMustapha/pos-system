@@ -17,7 +17,7 @@ const Payment = () => {
   const { checkOutInfo } = cart;
   const { cartItems } = cart;
   // const { cartInfo } = state;
-  // console.log(cartInfo);
+  
   const publicKey = "pk_test_db4e0085cf211bad348d0f063851f27f6ec7ebb9";
   useEffect(() => {
     setTotalValue(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -51,12 +51,20 @@ const Payment = () => {
     // const existingCartItemHistory =
     //   JSON.parse(localStorage.getItem("cartItemsHistory"));
 
-       // Append the new cartItems array to the existing data
+    // Append the new cartItems array to the existing data
     // existingCartItemHistory.push(cartItems);
-    localStorage.setItem(
-      "cartItemsHistory",
-      JSON.stringify(cartItems)
+
+    const localStorageContent = localStorage.getItem("cartItemsHistory");
+    let salesHistory;
+    if (localStorageContent === null) {
+      salesHistory = [];
+    } else {
+      salesHistory = JSON.parse(localStorageContent);
+    }
+    salesHistory.push(
+      cartItems
     );
+    localStorage.setItem("cartItemsHistory", JSON.stringify(salesHistory));
     dispatch({ type: "CART_CLEAR_ITEMS" });
     Cookies.set(
       "cart",
