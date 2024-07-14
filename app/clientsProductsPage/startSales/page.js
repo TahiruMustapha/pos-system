@@ -9,9 +9,12 @@ import { IoIosArrowRoundDown, IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LiaSearchSolid } from "react-icons/lia";
 import { MdLockReset } from "react-icons/md";
+import { fetchProducts } from "@/app/api/fetchProduct/route";
 
-const page = async () => {
-  const product = await products();
+const page = async ({ searchParams }) => {
+  const q = searchParams?.q || "";
+  // const product = await products();
+  const product = await fetchProducts(q);
  
   
   return (

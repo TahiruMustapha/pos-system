@@ -8,6 +8,8 @@ import { LiaSearchSolid } from "react-icons/lia";
 import { Store } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Search from "./Search";
+import SearchProducts from "./SearchProducts";
 
 const StartSalesPage = ({ products }) => {
   const { state, dispatch } = useContext(Store);
@@ -62,17 +64,20 @@ const StartSalesPage = ({ products }) => {
           <div className=" rounded-md px-2 py-2 shadow-md  bg-white">
             <div className=" flex items-center justify-between">
               <div>
-                <input
+                {/* <input
                   type="text"
                   className=" px-1 py-2 outline-none bg-white border-gray-200 border-[1px] rounded-sm"
                   placeholder="Search Product"
-                />
+                /> */}
+                {/* <Search /> */}
+                <SearchProducts/>
+                
               </div>
               <div>
                 <input
                   type="text"
                   className="  px-1 py-2 outline-none bg-white border-gray-200 border-[1px] rounded-sm"
-                  placeholder="Scan barcode here"
+                  placeholder="Search Product by barcode"
                 />
               </div>
             </div>
