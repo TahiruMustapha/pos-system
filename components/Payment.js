@@ -10,14 +10,13 @@ const Payment = () => {
   const { state, dispatch } = useContext(Store);
   const [totalValue, setTotalValue] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+
   // const {
   //   cart: { cartItems, checkOutInfo },
   // } = state;
   const { cart } = state;
   const { checkOutInfo } = cart;
   const { cartItems } = cart;
-  // const { cartInfo } = state;
-  
   const publicKey = "pk_test_db4e0085cf211bad348d0f063851f27f6ec7ebb9";
   useEffect(() => {
     setTotalValue(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
@@ -43,16 +42,33 @@ const Payment = () => {
       month: "long",
       day: "numeric",
     });
+    const today = new Date();
+    const currentMonthIndex = today.getMonth();
+    const currentMonthNumber = currentMonthIndex + 1;
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const currentMonthName = monthNames[currentMonthIndex];
+    localStorage.setItem("currentMonth", JSON.stringify(currentMonthName));
     localStorage.setItem("currentDate", JSON.stringify(currentDate));
     //CartItems for receipt
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    //CartItems for user history retrieved
-    // const existingCartItemHistory =
-    //   JSON.parse(localStorage.getItem("cartItemsHistory"));
-
-    // Append the new cartItems array to the existing data
-    // existingCartItemHistory.push(cartItems);
+    // Calculate the overall total sales
+    const totalSales = cartItems.reduce((total, item) => {
+      return total + item.productPrice * item.quantity;
+    }, 0);
+    localStorage.setItem("overallTotalSales", JSON.stringify(totalSales));
 
     const localStorageContent = localStorage.getItem("cartItemsHistory");
     let salesHistory;
@@ -61,9 +77,7 @@ const Payment = () => {
     } else {
       salesHistory = JSON.parse(localStorageContent);
     }
-    salesHistory.push(
-      cartItems
-    );
+    salesHistory.push(cartItems);
     localStorage.setItem("cartItemsHistory", JSON.stringify(salesHistory));
     dispatch({ type: "CART_CLEAR_ITEMS" });
     Cookies.set(

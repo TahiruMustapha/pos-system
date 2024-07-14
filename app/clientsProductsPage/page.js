@@ -57,17 +57,9 @@ const page = () => {
       setCurrentDate(storedDate);
     }
   }, []);
-
+  
   useEffect(() => {
-    // Retrieve the cartData array from local storage
-    // const localStorageContent = localStorage.getItem("cartItemsHistory");
-    // let salesHistory;
-    // if (localStorageContent === null) {
-    //   salesHistory = [];
-    // }else{
-    //   salesHistory = JSON.parse(localStorageContent)
-    // }
-    // salesHistory.push(cartItems)
+  
     const storedCartItems = JSON.parse(
       localStorage.getItem("cartItemsHistory")
     );
@@ -75,8 +67,38 @@ const page = () => {
       setCartInfo(storedCartItems);
     }
   }, []);
-//  console.log(typeof(cartInfo))
-// console.log(cartInfo)
+//  console.log(cartInfo)
+const today = new Date();
+const currentYear = today.getFullYear();
+const currentMonth = today.getMonth();
+const todayString = today.toISOString().split('T')[0];
+const flattenedSalesHistory = cartInfo.flat();
+// Calculate the total sales
+const overallTotalSales = flattenedSalesHistory.reduce((total, item) => {
+  return total + item.productPrice * (item.quantity || 1);
+}, 0);
+
+// Filter items created today
+const todaySalesItems = flattenedSalesHistory.filter(item => {
+  const itemDate = new Date(currentDate).toISOString().split('T')[0];
+  return itemDate === todayString;
+});
+
+// Calculate the total sales for today
+const todayTotalSales = todaySalesItems.reduce((total, item) => {
+  return total + item.productPrice * (item.quantity || 1);
+}, 0);
+
+// Filter items for the current month
+const monthSalesItems = flattenedSalesHistory.filter(item => {
+  const itemDate = new Date(currentDate);
+  return itemDate.getFullYear() === currentYear && itemDate.getMonth() === currentMonth;
+});
+
+// Calculate the total sales for the current month
+const totalSalesThisMonth = monthSalesItems.reduce((total, item) => {
+  return total + item.productPrice * (item.quantity || 1);
+}, 0);
   return (
     <div className="h-screen ">
       <div className=" w-full  h-full flex flex-row">
@@ -206,12 +228,12 @@ const page = () => {
                 <div className=" flex flex-col text-white px-12 py-5 rounded-md items-center bg-[#FC4100]">
                   <CiMoneyBill className=" text-3xl" />
                   <p>Overall Total Sales</p>
-                  <p>GH2309</p>
+                  <p>GH{overallTotalSales}</p>
                 </div>
                 <div className="  flex flex-col text-white px-10 py-5 rounded-md items-center bg-[#050C9C]">
                   <CgToday className=" text-3xl" />
                   <p>Total Sales Today</p>
-                  <p>GH230</p>
+                  <p>GH{todayTotalSales}</p>
                 </div>
                 <div className=" bg-[#C40C0C] flex flex-col text-white px-10 py-5 rounded-md items-center ">
                   <FcExpired className=" text-3xl" />
@@ -221,7 +243,7 @@ const page = () => {
                 <div className=" flex flex-col text-white px-10 py-5 rounded-md items-center bg-[#FF204E]">
                   <TbCalendarMonth className=" text-3xl" />
                   <p>Your Sales this Month</p>
-                  <p>GH2309</p>
+                  <p>GH{totalSalesThisMonth}</p>
                 </div>
               </div>
               <div className=" mt-6 w-[92%] mx-auto ">
@@ -243,6 +265,7 @@ const page = () => {
                       <p>Search:</p>
                       <input
                         type="text"
+                        placeholder="Search products..."
                         className=" outline-none border-gray-300 border-[1px] px-1 py-2 rounded-sm"
                       />
                     </div>
@@ -270,36 +293,34 @@ const page = () => {
                         </tr>
                       </thead>
                       {cartInfo.map((product, index) => (
-                      <tbody>
-                          {
-                            product.map((salesHistory)=>(
-<tr
-                            className=" border-b-black border-b-[2px] text-center"
-                            key={salesHistory._id}
-                          >
-                            <td className=" p-3  font-semibold">{index}</td>
-                            <td className=" p-3  font-semibold">
-                              {salesHistory.productName}
-                            </td>
-                            <td className=" p-3  font-semibold">
-                              {salesHistory.quantity}
-                            </td>
-                            <td className=" p-3  font-semibold">
-                              GHS {salesHistory.productPrice}
-                            </td>
-                            <td className=" p-3  font-semibold">
-                              GHS {salesHistory.quantity * salesHistory.productPrice}
-                            </td>
-                            <td className=" p-3  font-semibold">
-                              {currentDate}
-                            </td>
-                          </tr>
-                            ))
-                          }
-                          
-                      
-                      </tbody>
-                        ))}
+                        <tbody>
+                          {product.map((salesHistory) => (
+                            <tr
+                              className=" border-b-black border-b-[2px] text-center"
+                              key={salesHistory._id}
+                            >
+                              <td className=" p-3  font-semibold">{index}</td>
+                              <td className=" p-3  font-semibold">
+                                {salesHistory.productName}
+                              </td>
+                              <td className=" p-3  font-semibold">
+                                {salesHistory.quantity}
+                              </td>
+                              <td className=" p-3  font-semibold">
+                                GHS {salesHistory.productPrice}
+                              </td>
+                              <td className=" p-3  font-semibold">
+                                GHS{" "}
+                                {salesHistory.quantity *
+                                  salesHistory.productPrice}
+                              </td>
+                              <td className=" p-3  font-semibold">
+                                {currentDate}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      ))}
                     </table>
                   ) : (
                     <p className=" mt-3  flex items-center justify-center text-gray-500 text-center">
