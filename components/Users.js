@@ -12,16 +12,45 @@ const Users = ({ users }) => {
   // Calculate the number of unique categories
   const userType = new Set(users.map((user) => user.userType === "Admin"));
   const uniqueUserType = userType.size;
+  const adminUsers = users.userType === "Admin";
+  const totalUsers = users.length;
+  // console.log(adminUsers)
+  const userCounts = users.reduce((counts, user) => {
+    if (user.userType === 'Admin') {
+      counts.admins += 1;
+    } else if (user.userType === 'User') {
+      counts.users += 1;
+    }
+    return counts;
+  }, { admins: 0, users: 0 });
   return (
     <div className=" mt-3">
       <div>
         <div className=" flex items-center gap-2">
-          <div className=" px-5 py-3 w-[200px] bg-purple-600">
+          <div className=" px-5 py-3 w-[200px] bg-[#071952]">
             <div className=" w-full flex gap-3 items-center">
               <FaUsers className=" text-3xl text-white" />
               <div className=" flex text-white flex-col">
                 <p className=" text-sm">Total Users</p>
-                <p>{uniqueUserType}</p>
+                <p>{totalUsers}</p>
+              </div>
+            </div>
+          </div>
+          <div className=" px-5 py-3 w-[200px] bg-[#0766AD]">
+            <div className=" w-full flex gap-3 items-center">
+              <FaUsers className=" text-3xl text-white" />
+              <div className=" flex text-white flex-col">
+                <p className=" text-sm">Admin Users</p>
+                <p>{userCounts.admins}</p>
+              </div>
+            </div>
+          </div>
+          <div className=" px-5 py-3 w-[200px] bg-[#B80000]">
+            <div className=" w-full flex gap-3 items-center">
+              <FaUsers className=" text-3xl text-white" />
+              <div className=" flex text-white flex-col">
+                <p className=" text-sm"> Sales Users</p>
+                <p>{userCounts.users}</p>
               </div>
             </div>
           </div>

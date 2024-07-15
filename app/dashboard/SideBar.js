@@ -9,16 +9,17 @@ import { FaMessage } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+// import { useRouter } from "next/";
+import { signOut, useSession } from "next-auth/react";
+import { IoLogOutOutline } from "react-icons/io5";
 const SideBar = () => {
   const path = usePathname();
   const { data: session } = useSession();
   const isActive = (pathName) => {
     return path === pathName;
   };
-
+  const router = useRouter();
   return (
     <div className=" h-screen fixed  w-[19%] ">
       <div className=" w-full">
@@ -156,7 +157,6 @@ const SideBar = () => {
                 : `cursor-pointer text-gray-600`
             }
           >
-           
             Users
           </Link>
         </div>
@@ -186,6 +186,31 @@ const SideBar = () => {
             {" "}
             Report Bug
           </Link>
+        </div>
+        <div
+          className={
+            isActive("/dashboard/reportBug")
+              ? `w-full px-4 py-3 border-b-gray-200 border-b-[2px]  border-r-[5px] shadow-sm border-blue-500 bg-gray-100 flex items-center gap-2`
+              : `w-full px-4 py-3 border-b-gray-200 border-b-[2px] flex items-center gap-2`
+          }
+        >
+          <IoLogOutOutline
+            className={
+              isActive("/dashboard/reportBug")
+                ? `text-2xl text-blue-500`
+                : ` text-2xl text-gray-600`
+            }
+          />
+          <button
+            onClick={() => {
+              signOut({ redirect: false }).then(() => {
+                router.push("/"); // Redirect to the dashboard page after signing out
+              });
+            }}
+            className="  cursor-pointer text-gray-600"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
