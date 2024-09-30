@@ -3,8 +3,6 @@ import { fetchUserById } from "@/app/api/register/route";
 import EditProfileUsers from "@/components/EditProfileUsers";
 const page = async ({ params: { id } }) => {
   const user = await fetchUserById(id);
-
-  // console.log(user);
   const { username, bio, phone, email } = user;
   return (
     <div>

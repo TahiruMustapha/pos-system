@@ -5,9 +5,7 @@ import { ObjectId } from "mongodb";
 import { connect } from "@/utils/db";
 
 export async function POST(request, res) {
-  // if (request.method !== "POST") {
-  //   return res.status(405).json({ message: "Method not allowed" });
-  // }
+  
   try {
     const { username, password, phone, email, bio, userType } =
      await request.json();

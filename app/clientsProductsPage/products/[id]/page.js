@@ -6,11 +6,9 @@ import { BsCart3 } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import { LiaSearchSolid } from "react-icons/lia";
-
 const productScreen = async ({ params: { id } }) => {
   const productById = await fetchProductsById(id);
   //   const { state, dispatch } = useContext(Store);
-
   return (
     <div>
       <SingleProductPage product={productById} />
