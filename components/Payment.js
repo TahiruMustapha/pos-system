@@ -1,16 +1,18 @@
 "use client";
+
 import { Store } from "@/redux/store";
+// import { updateStock } from "@/utils/helper";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
 
-const Payment = () => {
+const Payment =  () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const [totalValue, setTotalValue] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-
+// console.log(products)
   // const {
   //   cart: { cartItems, checkOutInfo },
   // } = state;
@@ -24,6 +26,7 @@ const Payment = () => {
       cart.cartItems.reduce((a, c) => a + c.quantity * c.productPrice, 0)
     );
   }, []);
+
   const config = {
     reference: new Date().getTime().toString(),
     email: checkOutInfo.email,
@@ -35,8 +38,34 @@ const Payment = () => {
 
     alert("Please don't leave Benab!");
   };
-  const handlePaystackSuccessAction = () => {
-    const currentDate = new Date().toLocaleDateString("en-US", {
+
+  const updateStock = async () => {
+    try {
+      const response = await fetch("/api/updateStock", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cartItems }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Unable to update stock!");
+      }
+      console.log("Stock updated successfully!");
+      return true; // Indicate success
+    } catch (error) {
+      console.error("Error updating stock:", error);
+      // Optionally: Show an error message to the user here
+      alert(`Payment successful, but failed to update stock: ${error.message}. Please contact support.`);
+      return false; // Indicate failure
+    }
+  };
+
+  const  handlePaystackSuccessAction  =  async function(reference){
+    try {
+       const currentDate = new Date().toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
       month: "long",
@@ -78,17 +107,63 @@ const Payment = () => {
       salesHistory = JSON.parse(localStorageContent);
     }
     salesHistory.push(cartItems);
-    localStorage.setItem("cartItemsHistory", JSON.stringify(salesHistory));
-    dispatch({ type: "CART_CLEAR_ITEMS" });
-    Cookies.set(
-      "cart",
-      JSON.stringify({
-        ...cart,
-        cartItems: [],
-      })
-    );
-    router.push(`/clientsProductsPage/success`);
+      localStorage.setItem("cartItemsHistory", JSON.stringify(salesHistory));
+      
+      const stockUpdated = await updateStock();
+
+    // await updateStock();
+      // try {
+      //   const response  = await  fetch("/api/updateStock",{
+      //     method:"POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({cartItems}),
+          
+      //   })
+      //   if(!response.ok){
+      //     throw new Error("Unable to update stock!")
+      //   }
+      //   // return response;
+      //   console.log("Stock updated successfully!");
+      // } catch (error) {
+      //    console.error('Error updating stock:', error);
+      // }
+  
+//     dispatch({ type: "CART_CLEAR_ITEMS" });
+// Cookies.set(
+//       "cart",
+//       JSON.stringify({
+//         ...cart,
+//         cartItems: [],
+//       })
+//     );
+      //     router.push(/clientsProductsPage/success);
+      if (stockUpdated) {
+        // Only clear cart and redirect if stock update was successful
+        dispatch({ type: "CART_CLEAR_ITEMS" });
+        Cookies.set(
+          "cart",
+          JSON.stringify({
+            ...cart,
+            cartItems: [],
+          })
+        );
+        router.push("/clientsProductsPage/success");
+      } else {
+        // Handle the case where stock update failed after successful payment
+        // The alert in updateStock already notified the user.
+        // You might want to redirect to a specific error page or stay on the payment page.
+        // Avoid clearing the cart here, as the order state is now inconsistent.
+        console.error("Payment successful, but stock update failed. Cart not cleared.");
+      }
+    } catch (error) {
+    console.error("Something went wrong in payment success handler:", error);
+    }
+   
   };
+
+
   const componentProps = {
     // email: checkOutInfo.email,
     // amount: totalPrice * 100,
@@ -100,7 +175,7 @@ const Payment = () => {
     ...config,
     currency: "GHS",
     text: "Pay Now",
-    onSuccess: handlePaystackSuccessAction,
+    onSuccess: (reference)=> handlePaystackSuccessAction(reference),
     onClose: handlePaystackCloseAction,
   };
   return (

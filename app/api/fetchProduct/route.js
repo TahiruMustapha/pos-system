@@ -8,10 +8,11 @@ export const fetchProducts = async (q, req, res) => {
   try {
     await connect();
 
-    const products = await AddProduct.find({ productName: { $regex: regex } });
+    const products = await AddProduct.find({
+      productName: { $regex: regex },
+    }).lean();
 
     return products;
-   
   } catch (error) {
     throw new Error("Unable to fetch product!");
     // console.log(error)
@@ -41,6 +42,6 @@ export const fetchProductsById = async (id) => {
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
   await connect();
-  await AddProduct.findByIdAndDelete(id)
-  return NextResponse.json({message:"Product Deleted!"}, {status:201})
+  await AddProduct.findByIdAndDelete(id);
+  return NextResponse.json({ message: "Product Deleted!" }, { status: 201 });
 }
